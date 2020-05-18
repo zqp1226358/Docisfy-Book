@@ -47,3 +47,61 @@ public:
 ```
 **运行结果：**
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200413214244426.png)
+
+
+## 152. 乘积最大子数组
+
+给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
+
+
+示例 1:
+
+>输入: [2,3,-2,4]
+
+>输出: 6
+
+解释: 子数组 [2,3] 有最大乘积 6。
+
+示例 2:
+
+>输入: [-2,0,-1]
+
+>输出: 0
+
+解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。
+
+思路分析：
+动态规划
+遍历数组时计算当前最大值，不断更新
+由于存在负数，那么会导致最大的变最小的，最小的变最大的。因此还需要维护当前最小值imin
+还要注意存在0的情况
+
+```cpp
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        //maxi表示以当前节点为终结节点的最大连续子序列乘积 
+		//mini表示以当前节点为终结节点的最小连续子序列乘积
+        int res=INT_MIN, maxi=1,mini=1;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i] > 0){
+                maxi = max(maxi*nums[i],nums[i]);
+                mini = min(mini*nums[i],nums[i]);
+            }
+            else if(nums[i] == 0){
+                maxi=1,mini=1;
+                res = max(res,0);
+                continue;
+            }
+            else if(nums[i] < 0){
+                int t=maxi;
+                maxi = max(mini*nums[i],nums[i]);
+                mini = min(t*nums[i],nums[i]);
+            }
+            res = max(res,maxi);
+        }
+        return res;
+    }
+};
+
+```
