@@ -18,3 +18,15 @@
   - [深度卷积网络：实例探究](Convolutional_Neural_Networks/深度卷积网络：实例探究)
   - [目标检测](Convolutional_Neural_Networks/目标检测)
   - [特殊应用：人脸识别和神经风格迁移](Convolutional_Neural_Networks/特殊应用：人脸识别和神经风格迁移)
+* 计算机基础
+  * [计算机网络](./docs/c-1计算机网络.md)
+  * [数据结构](./docs/c-2数据结构.md)
+  * [算法](./docs/c-3算法.md)
+  * [操作系统](./docs/c-4操作系统.md)
+* 数据库
+  * [MySQL](./docs/d-1-mysql.md)
+  * [Redis](./docs/d-2-redis.md)
+* 常用框架
+  * [Spring](./docs/e-1spring.md)
+  * [MyBatis](./docs/e-2mybatis.md)
+  * [Kafka](./docs/e-3kafka.md)
