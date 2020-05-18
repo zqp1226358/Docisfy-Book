@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>计科课程笔记</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -12,11 +12,15 @@
   <div id="app">Please wait...</div>
   <script>
     window.$docsify = {
-      name: '',
+      name: '计科课程笔记',
       repo: '',
-      loadSidebar: true
+      coverpage: true,
+      loadSidebar: true,
+      subMaxLevel: 2
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <!-- 引入 C++ 代码高亮插件 -->
+  <script src="//unpkg.com/prismjs/components/prism-cpp.min.js"></script>
 </body>
 </html>
