@@ -5,8 +5,8 @@
   - [树](data-structure/tree/)
 - **算法思想**
   - [排序](algorithm/sort)
-  - [搜索](docs/algorithm/research)
-  - [动态规划](algorithm/dynamic)
+  - [搜索](/algorithm/research)
+  - [动态规划](./docs/algorithm/dynamic)
   - [贪心](algorithm/greedy/)
   - [位运算](algorithm/bit/)
   - [数学题](algorithm/math)
