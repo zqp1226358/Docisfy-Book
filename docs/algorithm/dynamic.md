@@ -107,3 +107,94 @@ public:
 };
 
 ```
+
+
+## 300. 最长上升子序列
+
+给定一个无序的整数数组，找到其中最长上升子序列的长度。
+
+示例:
+
+>输入: [10,9,2,5,3,7,101,18]
+
+>输出: 4 
+
+解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。
+说明:
+
+可能会有多种最长上升子序列的组合，你只需要输出对应的长度即可。
+你算法的时间复杂度应该为 O(n2) 。
+进阶: 你能将算法的时间复杂度降低到 O(n log n) 吗?
+
+```
+int lengthOfLIS(vector<int>& nums) {
+        int f[nums.size()+1];
+        for(int i=0;i<nums.size();i++){
+            f[i] = 1;
+        }
+        for(int i=0;i<nums.size();i++){
+            for(int j=0;j<i;j++){
+                if(nums[j]<nums[i]){
+                    f[i] = max(f[i],f[j]+1);//i前面j个中最大值
+                }
+            }
+        }
+        int result = 0;
+        for(int i=0;i<nums.size();i++){//动态规划表中的最大值
+            result = max(result,f[i]);
+        }
+        return result;
+    }
+```
+
+
+## 1143. 最长公共子序列
+给定两个字符串 text1 和 text2，返回这两个字符串的最长公共子序列的长度。
+
+一个字符串的 子序列 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
+例如，"ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。两个字符串的「公共子序列」是这两个字符串所共同拥有的子序列。
+
+若这两个字符串没有公共子序列，则返回 0。
+
+ 
+示例 1:
+
+>输入：text1 = "abcde", text2 = "ace" 
+
+>输出：3  
+解释：最长公共子序列是 "ace"，它的长度为 3。
+
+思路分析：
+
+- 第一种情况 s1[i] == s2[j]
+- 第二种情况 两个字符至少有一个不在lcs中
+
+```
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        vector<vector<int> > res;
+        int m=text1.length(),n=text2.length();
+        for(int i=0;i<=m;i++){
+            vector<int> tmp;
+            for(int j=0;j<=n;j++){
+                tmp.push_back(0);
+            }
+            res.push_back(tmp);
+        }
+
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(text1[i-1] == text2[j-1]){
+                    res[i][j] = res[i-1][j-1]+1;
+                }
+                else{
+                    res[i][j] = max(res[i-1][j],res[i][j-1]);//还可以加res[i-1][j-1]但好像没有必要
+                }
+            }
+        }
+
+        return res[m][n];
+    }
+};
+```
