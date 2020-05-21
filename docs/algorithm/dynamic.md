@@ -198,3 +198,141 @@ public:
     }
 };
 ```
+
+## 5. 最长回文子串
+给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+
+示例 1：
+
+>输入: "babad"
+
+>输出: "bab"
+
+注意: "aba" 也是一个有效答案。
+
+示例 2：
+
+>输入: "cbbd"
+
+>输出: "bb"
+
+思路分析：
+
+- 二维动态规划
+- dp[i][j] 表示s[i...j]是否是回文串
+- 状态转移 dp[i][j] = (s[i] == s[j]) && dp[i+1][j-1]  i<=j
+- 边界条件 不构成区间（为1） j-1-(i+1)<2  
+- j-i < 3 
+- s[i..j] 长度为2或3或1 只需判断头和尾  
+- 所以最终 如果s[i]==s[j] & j-i<3 就可以得出dp[i][j] = true 否则就进行状态转移
+- 初始化，对角线，单个字符一定是回文，为true
+
+- 还可以用中心扩散（未尝试）
+
+```cpp
+class Solution {
+public:
+    string longestPalindrome(string s) {
+      int len = s.length();
+    if(len<2){
+        return s;
+    }
+
+    int maxlen = 1;
+    int  begin = 0;
+
+    // int **a=new int*[l];
+	// for(i=0;i<l;i++)
+	// 	a[i]=new int[l];
+    int dp[1002][1002] = {0};
+
+    for(int i=0;i<len;i++){//初始化
+        dp[i][i] = 1;
+    }
+    for(int j=1;j<len;j++){
+        for(int i=0;i<j;i++){
+            if(s[i] != s[j]){
+                dp[i][j] = 0;
+            }else{
+                if(j-i<3){
+                    dp[i][j] = 1;
+                }else{
+                    dp[i][j] = dp[i+1][j-1];
+                }
+            }
+            //如果是回文串，记录最大长度和开始下标
+            if(dp[i][j] && j-i+1>maxlen){
+                maxlen = j-i+1;
+                begin = i;
+            }
+        }
+    }
+
+    return s.substr(begin,maxlen);  
+    }
+};
+```
+
+## 1371. 每个元音包含偶数次的最长子字符串
+给你一个字符串 s ，请你返回满足以下条件的最长子字符串的长度：每个元音字母，即 'a'，'e'，'i'，'o'，'u' ，在子字符串中都恰好出现了偶数次。
+
+ 
+示例 1：
+
+>输入：s = "eleetminicoworoep"
+
+>输出：13
+
+解释：最长子字符串是 "leetminicowor" ，它包含 e，i，o 各 2 个，以及 0 个 a，u 。
+示例 2：
+
+>输入：s = "leetcodeisgreat"
+
+>输出：5
+
+解释：最长子字符串是 "leetc" ，其中包含 2 个 e 。
+
+示例 3：
+
+>输入：s = "bcbcbc"
+
+>输出：6
+
+解释：这个示例中，字符串 "bcbcbc" 本身就是最长的，因为所有的元音 a，e，i，o，u 都出现了 0 次。
+
+思路分析：
+- 状态压缩+前缀和
+- 用二进制表示 'aeiou'的状态，比如00000表示各个元音出现偶数次
+- 第一次碰到则记录i+1
+- 再次碰到相同状态的时候，与上次状态相减就得到最长子字符串，因为奇数-奇数为偶数
+- 初始化 pos[0] = 0,其他为-1.注意只有0这个才为偶数状态。
+- 还可以用哈希表（未尝试）
+
+```cpp
+class Solution {
+public:
+    int findTheLongestSubstring(string s) {
+        int res=0,statu=0;
+        vector<int> pos(32,-1);
+        pos[0] = 0;
+        for(int i=0;i<s.length();i++){
+            if(s[i] == 'a')
+                statu ^= 1;
+            else if(s[i] == 'e')
+                statu ^= 1<<1;
+            else if(s[i] == 'i')
+                statu ^= 1<<2;
+            else if(s[i] == 'o')
+                statu ^= 1<<3;
+            else if(s[i] == 'u')
+                statu ^= 1<<4;
+            if(pos[statu] == -1){
+                pos[statu] = i+1;
+            }else{
+                res = max(res,i+1-pos[statu]);
+            }
+        }
+        return res;
+    }
+};
+```
