@@ -336,3 +336,70 @@ public:
     }
 };
 ```
+
+## 76. 最小覆盖子串
+给你一个字符串 S、一个字符串 T，请在字符串 S 里面找出：包含 T 所有字符的最小子串。
+
+示例：
+
+> 输入: S = "ADOBECODEBANC", T = "ABC"
+
+> 输出: "BANC"
+
+说明：
+
+如果 S 中不存这样的子串，则返回空字符串 ""。
+如果 S 中存在这样的子串，我们保证它是唯一的答案。
+
+思路分析：
+利用滑动窗口
+左闭右开，初始化left和right都为0
+窗口加进去一个，right++，而此时的长度为right-left
+用两个哈希表存储窗口和需要包含的字符
+首先将t存入哈希表中
+从while(right < s.length())开始移动，如果遇到合适的字符，窗口对应字符加1，如果窗口值还恰好等于need值，那么valid值也加1
+如果发现valid == need.size(),那么窗口就开始收缩，left++
+检查先前left值是否在need中存在，如果存在，窗口值先与need值进行比较，如果相等valid--，然后窗口对应值减少。
+
+```
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char,int> need,window;
+        for(char c:t){
+            need[c]++;
+        }
+        int left=0,right=0;
+        int valid=0;
+        int start=0,len=INT_MAX;
+        while(right < s.length()){
+            char c=s[right];
+            right++;
+
+            if(need.count(c)){
+                window[c]++;
+                if(window[c] == need[c]){
+                    valid++;
+                }
+            }
+
+            while(valid == need.size()){
+                if(right-left < len){
+                    start = left;
+                    len = right-left;
+                }
+                char d=s[left];
+                left++;
+                if(need.count(d)){
+                    if(window[d] == need[d]){
+                        valid--;
+                    }   
+                    window[d]--;
+                } 
+            }
+        }
+
+        return len == INT_MAX? "":s.substr(start,len);
+    }
+};
+```
