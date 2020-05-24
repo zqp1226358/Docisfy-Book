@@ -361,7 +361,7 @@ public:
 如果发现valid == need.size(),那么窗口就开始收缩，left++
 检查先前left值是否在need中存在，如果存在，窗口值先与need值进行比较，如果相等valid--，然后窗口对应值减少。
 
-```
+```cpp
 class Solution {
 public:
     string minWindow(string s, string t) {

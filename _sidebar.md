@@ -12,7 +12,7 @@
   - [数学题](algorithm/math)
   - [其他](algorithm/other)
 - **周赛**
-  - [第 121 场周赛](weekly/121/)
+  - [第 190 场周赛](./docs/week/190.md)
 - **其他**
   - [计算机基础](Convolutional_Neural_Networks/卷积神经网络)
   - [数据库](Convolutional_Neural_Networks/深度卷积网络：实例探究)
